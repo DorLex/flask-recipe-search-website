@@ -46,17 +46,6 @@ class Handler:
         recipes = Recipes.query.order_by(Recipes.id.desc()).limit(5).all()
         return render_template('index.html', recipes=recipes)
 
-    # @staticmethod
-    # def search():
-    #     q = request.args.get('q')
-    #     if q:
-    #         recipes = Searcher.result(q)
-    #         if not recipes:
-    #             flash('НЕ НАЙДЕНО')
-    #         return render_template('search.html', recipes=recipes, title='Поиск')
-    #     else:
-    #         return render_template('search.html', recipes=None, title='Поиск')
-
     @staticmethod
     def search(ing):
         if ing:
@@ -80,7 +69,6 @@ class Handler:
     def live_search():
         if request.method == "POST":
             json_data = request.get_json()
-            # print(json_data)
             ingredients = Ingredients.query.filter(Ingredients.ingredient.ilike(f'%{json_data["ingredient"]}%')).all()
             ing_list = []
             for ing in ingredients:

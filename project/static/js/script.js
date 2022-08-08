@@ -4,9 +4,9 @@ const ingredientsBox = document.querySelector('.selected-ingredients')
 const selectedIngredients = document.getElementsByClassName('selected-ingredient-span')
 const searchButton = document.querySelector('.search-button')
 
-searchBar.addEventListener('input', inputSearchBar);
+searchBar.addEventListener('input', searchBarHandler);
 
-function inputSearchBar() {
+function searchBarHandler() {
   let searchInput = this.value
   let ing = {
     ingredient: searchInput,
@@ -24,7 +24,7 @@ function liveSearchFetch(ing) {
   fetch('http://127.0.0.1:5000/live-search', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json;charset=utf-8'
+      'Content-Type': 'application/json; charset=utf-8'
     },
     body: JSON.stringify(ing)
   })
@@ -73,13 +73,11 @@ function liveSearchFetch(ing) {
 
 
 searchButton.addEventListener('click', function () {
-  console.log(selectedIngredients);
   let ingList = []
-  for (element of selectedIngredients) {
-    ingList.push(element.innerText);
-  }
-
-  if (ingList.length > 0) {
+  if (selectedIngredients.length > 0) {
+    for (element of selectedIngredients) {
+      ingList.push(element.innerText);
+    }
     window.location.href = `http://127.0.0.1:5000/search/${ingList}`;
-  }
+  };
 });
