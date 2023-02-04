@@ -1,6 +1,5 @@
-venv/
-.idea/
-.vscode/
-project/__pycache__/
-parser/__pycache__/
+/.idea/
+/.vscode/
+/venv/
+__pycache__/
 parser/config.py
