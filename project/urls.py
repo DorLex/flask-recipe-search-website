@@ -1,5 +1,5 @@
 from project import app
-from project.handler import Handler
+from project.controllers import Handler
 
 
 class Router:

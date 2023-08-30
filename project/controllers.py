@@ -1,5 +1,5 @@
 from flask import render_template, request, flash, jsonify
-from project.database import db, Recipes, Ingredients, Book
+from project.db_models import db, Recipes, Ingredients, Book
 
 
 class Searcher:
