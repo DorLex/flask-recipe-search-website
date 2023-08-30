@@ -1,5 +1,46 @@
 from flask import render_template, request, flash, jsonify
+from flask.views import MethodView
+
 from project.db_models import db, Recipes, Ingredients, Book
+
+
+class HomeView(MethodView):
+    def get(self):
+        recipes = Recipes.query.order_by(Recipes.id.desc()).limit(5).all()
+        return render_template('index.html', recipes=recipes)
+
+
+class RecipeDetails(MethodView):
+    def get(self, recipe_id):
+        recipe = Recipes.query.get(recipe_id)
+        return render_template('recipe_details.html', recipe=recipe, title=f'Рецепт №{recipe_id}')
+
+
+class About(MethodView):
+    def get(self):
+        return render_template('about.html', title='О сайте')
+
+
+class SearchRecipes(MethodView):
+    def get(self, ingredients):
+        if ingredients:
+            recipes = Searcher.result(ingredients)
+            if not recipes:
+                flash('НЕ НАЙДЕНО')
+            return render_template('search.html', recipes=recipes, title='Поиск')
+        else:
+            return render_template('search.html', recipes=None, title='Поиск')
+
+
+class LiveSearchIngredients(MethodView):
+    def post(self):
+        json_data = request.get_json()
+        ingredients = Ingredients.query.filter(Ingredients.ingredient.ilike(f'%{json_data["ingredient"]}%')).all()
+        ingredients_list = []
+        for ing in ingredients:
+            ingredients_list.append(ing.ingredient)
+
+        return jsonify(ingredients_list)
 
 
 class Searcher:
@@ -38,43 +79,3 @@ class Searcher:
         recipes = cls.search_for_recipe_matches(intersect_recipes_id)
 
         return recipes
-
-
-class Handler:
-    @staticmethod
-    def index():
-        recipes = Recipes.query.order_by(Recipes.id.desc()).limit(5).all()
-        return render_template('index.html', recipes=recipes)
-
-    @staticmethod
-    def search(ing):
-        if ing:
-            recipes = Searcher.result(ing)
-            if not recipes:
-                flash('НЕ НАЙДЕНО')
-            return render_template('search.html', recipes=recipes, title='Поиск')
-        else:
-            return render_template('search.html', recipes=None, title='Поиск')
-
-    @staticmethod
-    def recipe_details(recipe_id):
-        recipe = Recipes.query.get(recipe_id)
-        return render_template('recipe_details.html', recipe=recipe, title=f'Рецепт №{recipe_id}')
-
-    @staticmethod
-    def about():
-        return render_template('about.html', title='О сайте')
-
-    @staticmethod
-    def live_search():
-        if request.method == "POST":
-            json_data = request.get_json()
-            ingredients = Ingredients.query.filter(Ingredients.ingredient.ilike(f'%{json_data["ingredient"]}%')).all()
-            ing_list = []
-            for ing in ingredients:
-                ing_list.append(ing.ingredient)
-
-            return jsonify(ing_list)
-
-        elif request.method == "GET":
-            return '<h1>(-_-)</h1>'
