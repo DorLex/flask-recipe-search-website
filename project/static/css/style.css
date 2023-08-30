@@ -41,7 +41,7 @@ body {
   margin-left: 2%;
 }
 
-.mainmenu ul {
+.mainmenu {
   list-style: none;
   display: flex;
   justify-content: center;
@@ -57,7 +57,7 @@ body {
   border-radius: 2em / 5em;
 }
 
-.mainmenu ul li:hover {
+.mainmenu li:hover {
   background-color: rgb(255, 166, 0);
   box-shadow: 1px 7px 30px -5px black;
   transform: rotate(2deg) scale(1.1);
@@ -228,7 +228,7 @@ body {
 }
 
 @media (max-width: 1000px) {
-  .mainmenu ul {
+  .mainmenu {
     display: none;
   }
 }

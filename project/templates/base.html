@@ -18,13 +18,11 @@
   <header class="header">
     <h1 id="website-name" class="website-name">Рецепты от Сани</h1>
 
-    <nav class="mainmenu">
-      <ul>
-        <li><a href='/'>Главная</a></li>
-        <li><a href='/registration'>Регистрация</a></li>
-        <li><a href='/about'>О сайте</a></li>
-      </ul>
-    </nav>
+    <menu class="mainmenu">
+      <li><a href="{{ url_for('home') }}">Главная</a></li>
+      <li><a href='/registration'>Регистрация</a></li>
+      <li><a href="{{ url_for('about') }}">О сайте</a></li>
+    </menu>
   </header>
 
   <div class="title">
