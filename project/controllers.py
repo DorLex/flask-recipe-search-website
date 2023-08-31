@@ -2,23 +2,35 @@ from flask import render_template, request, flash, jsonify
 from flask.views import MethodView
 
 from project.db_models import db, Recipes, Ingredients, Book
+from project.services import get_db
 
 
 class HomeView(MethodView):
     def get(self):
-        recipes = Recipes.query.order_by(Recipes.id.desc()).limit(5).all()
+        recipes = get_db.get_recipes()
         return render_template('index.html', recipes=recipes)
 
 
 class RecipeDetails(MethodView):
     def get(self, recipe_id):
-        recipe = Recipes.query.get(recipe_id)
+        recipe = get_db.get_recipe(recipe_id)
         return render_template('recipe_details.html', recipe=recipe, title=f'Рецепт №{recipe_id}')
 
 
 class About(MethodView):
     def get(self):
         return render_template('about.html', title='О сайте')
+
+
+class LiveSearchIngredients(MethodView):
+    def post(self):
+        json_data = request.get_json()
+        ingredients = get_db.get_ingredients(json_data)
+        ingredients_list = []
+        for ing in ingredients:
+            ingredients_list.append(ing.ingredient)
+
+        return jsonify(ingredients_list)
 
 
 class SearchRecipes(MethodView):
@@ -32,50 +44,40 @@ class SearchRecipes(MethodView):
             return render_template('search.html', recipes=None, title='Поиск')
 
 
-class LiveSearchIngredients(MethodView):
-    def post(self):
-        json_data = request.get_json()
-        ingredients = Ingredients.query.filter(Ingredients.ingredient.ilike(f'%{json_data["ingredient"]}%')).all()
-        ingredients_list = []
-        for ing in ingredients:
-            ingredients_list.append(ing.ingredient)
-
-        return jsonify(ingredients_list)
-
-
 class Searcher:
     @classmethod
-    def search_for_recipe_matches(cls, intersect_recipes_id):
-        recipes = Recipes.query.filter(Recipes.id.in_(intersect_recipes_id)).all()
+    def search_for_recipe_matches(cls, intersect_recipes_id_query):
+        recipes = Recipes.query.filter(Recipes.id.in_(intersect_recipes_id_query)).all()
         return recipes
 
     @classmethod
-    def intersect_recipes_id(cls, recipes_id):
-        result = db.intersect(*recipes_id)
+    def intersect_recipes_id(cls, query_objs):
+        result = db.intersect(*query_objs)
         return result
 
     @classmethod
     def search_recipes_id_by_ingredients(cls, search_elements):
-        all_found_recipes_id = []
+        query_objs = []  # list[query,] query() -> [(1,), (2,),]   (query на каждый ингредиент)
         for ing in search_elements:
-            rec = db.session.query(Recipes.id) \
+            ingredient_with_recipes = db.session.query(Recipes.id) \
                 .join(Book, Book.recipe_id == Recipes.id) \
                 .join(Ingredients, Book.ingredient_id == Ingredients.id) \
                 .filter(Ingredients.ingredient.ilike(f'%{ing}%'))
-            all_found_recipes_id.append(rec)
+            query_objs.append(ingredient_with_recipes)
 
-        return all_found_recipes_id
+        return query_objs
 
     @classmethod
     def get_search_elements(cls, q):
-        search_elements = [x.strip() for x in q.split(',')]
+        # search_elements = [x.strip() for x in q.split(',')]
+        search_elements = q.strip().split(',')
         return search_elements
 
     @classmethod
     def result(cls, q):
         search_elements = cls.get_search_elements(q)
-        all_found_recipes_id = cls.search_recipes_id_by_ingredients(search_elements)
-        intersect_recipes_id = cls.intersect_recipes_id(all_found_recipes_id)
-        recipes = cls.search_for_recipe_matches(intersect_recipes_id)
+        query_objs = cls.search_recipes_id_by_ingredients(search_elements)
+        intersect_recipes_id_query = cls.intersect_recipes_id(query_objs)
+        recipes = cls.search_for_recipe_matches(intersect_recipes_id_query)
 
         return recipes
