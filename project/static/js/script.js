@@ -78,6 +78,6 @@ searchButton.addEventListener('click', function () {
     for (element of selectedIngredients) {
       ingList.push(element.innerText);
     }
-    window.location.href = `http://127.0.0.1:5000/search/${ingList}`;
+    window.location.href = `http://127.0.0.1:5000/search-recipes/${ingList}`;
   };
 });

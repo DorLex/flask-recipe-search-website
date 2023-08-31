@@ -2,10 +2,6 @@
 
 {% block content %}
 
-{% for message in get_flashed_messages() %}
-<h3 class="red flashed-messages">{{ message }}</h3>
-{% endfor %}
-
 
 {% if recipes %}
 {% for recipe in recipes %}
@@ -24,8 +20,18 @@
 
 {% endfor %}
 
-{% elif recipes == None %}
+
+
+{% elif not recipes %}
+
+{% for message in get_flashed_messages() %}
+<h3 class="red flashed-messages">{{ message }}</h3>
+{% endfor %}
+
 <h3 class="green flashed-messages">Введите ингредиенты в поиск</h3>
+
 {% endif %}
+
+
 
 {% endblock %}
