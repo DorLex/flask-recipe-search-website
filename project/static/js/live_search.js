@@ -4,32 +4,26 @@ export const selectedIngredientsBox = document.querySelector('.selected-ingredie
 
 
 
-export function liveSearchIngredients(ingredient) {
-  fetch(
-    'http://127.0.0.1:5000/live-search',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8'
-      },
-      body: JSON.stringify(ingredient)
-    }
-  )
+export function liveSearchIngredients(inputText) {
+  let url = 'http://127.0.0.1:5000/live-search' + `?ingredient=${inputText}`;
+
+  fetch(url)
 
     .then(responseObj => {
       return responseObj.json();
     })
 
-    .then(foundIngredients => {
+    .then(foundIngredientsList => {
 
       dropDownListIngredientsUl.innerHTML = ''
-      if (foundIngredients.length > 0) {
+      if (foundIngredientsList.length > 0) {
         dropDownListIngredientsUl.style.display = 'block';
       } else {
         dropDownListIngredientsUl.style.display = 'none';
       }
 
-      foundIngredients.forEach(foundIngredient => {
+      foundIngredientsList.forEach(foundIngredient => {
+
         let dropSerchElementLi = document.createElement('li');
         dropSerchElementLi.innerHTML = foundIngredient;
         dropSerchElementLi.className = 'search-element';

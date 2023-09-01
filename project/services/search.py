@@ -1,10 +1,9 @@
 from project.db_models import db, Recipes, Ingredients, Book
 
 
-def _get_search_elements(q):
-    # search_elements = [x.strip() for x in q.split(',')]
-    search_elements = q.strip().split(',')
-    return search_elements
+def _parse_search_elements(ingredients_str):
+    search_elements_list = ingredients_str.split(',')
+    return search_elements_list
 
 
 def _search_recipes_id_by_ingredients(search_elements):
@@ -33,9 +32,9 @@ def _get_intersect_recipes_list(intersect_recipes_id_query):
     return recipes_list
 
 
-def get_recipes_by_ingredients(ingredients):
-    search_elements = _get_search_elements(ingredients)
-    recipes_id_query_objs = _search_recipes_id_by_ingredients(search_elements)
+def get_recipes_by_ingredients(ingredients_str):
+    search_ingredients_list = _parse_search_elements(ingredients_str)
+    recipes_id_query_objs = _search_recipes_id_by_ingredients(search_ingredients_list)
     intersect_recipes_id_query = _intersect_queries(recipes_id_query_objs)
     recipes_list = _get_intersect_recipes_list(intersect_recipes_id_query)
 

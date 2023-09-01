@@ -1,27 +1,18 @@
-import {
-  searchBar,
-  dropDownListIngredientsUl,
-  liveSearchIngredients,
-} from './live_search.js';
+import { searchBar, dropDownListIngredientsUl, liveSearchIngredients, } from './live_search.js';
 
 
 
 const searchButton = document.querySelector('.search-button')
-const selectedIngredients = document.getElementsByClassName('selected-ingredient-span')
+const selectedIngredientsSnans = document.getElementsByClassName('selected-ingredient-span')
 
 
 
 function searchBarHandler() {
+
   let inputText = this.value
 
-  // мб убрать
-  let ingredient = {
-    ingredient: inputText,
-  };
-
-
   if (inputText) {
-    liveSearchIngredients(ingredient)
+    liveSearchIngredients(inputText)
 
   } else {
     dropDownListIngredientsUl.style.display = 'none';
@@ -29,22 +20,26 @@ function searchBarHandler() {
   };
 };
 
-
-
 searchBar.addEventListener('input', searchBarHandler);
 
 
 
-function recipeSearch() {
-  let ingList = []
 
-  if (selectedIngredients.length > 0) {
-    for (let element of selectedIngredients) {
-      ingList.push(element.innerText);
+
+function recipeSearch() {
+
+  let ingredientsList = [];
+
+  if (selectedIngredientsSnans.length > 0) {
+    for (let spanElement of selectedIngredientsSnans) {
+      ingredientsList.push(spanElement.innerText);
     }
-    window.location.href = `http://127.0.0.1:5000/search-recipes/${ingList}`;
+
+    let url = 'http://127.0.0.1:5000/search-recipes-by-ingredients' + `?ingredients=${ingredientsList}`;
+
+    window.location.href = url;
+
   };
 };
-
 
 searchButton.addEventListener('click', recipeSearch);
