@@ -35,11 +35,11 @@
     {% endblock %}
   </div>
 
-  <div class="selected-ingredients"></div>
+  <div class="selected-ingredients-box"></div>
 
   <div class="search">
     <input type="text" class="search-bar" placeholder="Поиск ингредиентов">
-    <ul id="live-search" class="live-search-list"></ul>
+    <ul id="dropdown-list-ingredients" class="dropdown-list-ingredients"></ul>
   </div>
 
   <input type="button" class="search-button" value="Найти рецепты">
@@ -49,7 +49,8 @@
   {% block content %}
   {% endblock %}
 
-  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <script type="module" src="{{ url_for('static', filename='js/main_script.js') }}"></script>
+
 </body>
 
 </html>

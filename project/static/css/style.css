@@ -80,7 +80,7 @@ body {
   margin-bottom: 30px;
 }
 
-.selected-ingredients {
+.selected-ingredients-box {
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 10px;
@@ -137,7 +137,7 @@ body {
   box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
 }
 
-.live-search-list {
+.dropdown-list-ingredients {
   list-style: none;
   display: none;
   background-color: rgb(230, 240, 252);

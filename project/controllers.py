@@ -22,7 +22,7 @@ class LiveSearchIngredients(MethodView):
         ingredient = json_data.get('ingredient')
 
         ingredients = get_db.get_ingredients_ilike(ingredient)
-        
+
         ingredients_list = []
         for ing in ingredients:
             ingredients_list.append(ing.ingredient)
@@ -32,7 +32,7 @@ class LiveSearchIngredients(MethodView):
 
 class SearchRecipes(MethodView):
     def get(self, ingredients):
-        recipes_list = search.get_recipes_list(ingredients)
+        recipes_list = search.get_recipes_by_ingredients(ingredients)
         if not recipes_list:
             flash('НЕ НАЙДЕНО')
         return render_template('search.html', recipes=recipes_list, title='Поиск')
