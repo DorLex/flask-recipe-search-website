@@ -17,16 +17,9 @@ class RecipeDetails(MethodView):
 
 
 class LiveSearchIngredients(MethodView):
-
     def get(self):
         input_ingredient = request.args.get('ingredient')
-        print([input_ingredient])
-
-        ingredients_obj = get_db.get_ingredients_ilike(input_ingredient)
-
-        ingredients_list = []
-        for ingredient in ingredients_obj:
-            ingredients_list.append(ingredient.ingredient)
+        ingredients_list = get_db.get_ingredients_ilike(input_ingredient)
 
         return jsonify(ingredients_list)
 
@@ -34,7 +27,6 @@ class LiveSearchIngredients(MethodView):
 class SearchRecipes(MethodView):
     def get(self):
         ingredients_str = request.args.get('ingredients')
-
         recipes_list = search.get_recipes_by_ingredients(ingredients_str)
 
         if not recipes_list:
