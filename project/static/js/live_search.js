@@ -5,7 +5,7 @@ export const selectedIngredientsBox = document.querySelector('.selected-ingredie
 
 
 export function clearElement(element) {
-  element.innerHTML = ''
+  element.innerHTML = '';
 }
 
 
@@ -39,20 +39,25 @@ function createElement(tagName, className, { content = null, type = null }) {
 };
 
 
-function dropSerchElementHandler(dropSerchElementLi) {
-  clearElement(dropDownListIngredientsUl);
-  setDisplay(dropDownListIngredientsUl, 'none');
-  searchBar.value = ''
-
-  let selectIngredientSpan = createElement('span', 'selected-ingredient-span', { content: dropSerchElementLi.innerHTML })
-  let closeButtonSelectIngredient = createElement('button', 'search-element-btn', { type: 'button' })
+function addSelectedIngredient(dropSerchElementLi) {
+  let selectIngredientSpan = createElement('span', 'selected-ingredient-span', { content: dropSerchElementLi.innerHTML });
+  let closeButtonSelectIngredient = createElement('button', 'search-element-btn', { type: 'button' });
 
   closeButtonSelectIngredient.addEventListener('click', () => selectIngredientSpan.remove());
 
   selectIngredientSpan.appendChild(closeButtonSelectIngredient);
 
-
   selectedIngredientsBox.appendChild(selectIngredientSpan);
+};
+
+
+
+function dropSerchElementHandler(dropSerchElementLi) {
+  clearElement(dropDownListIngredientsUl);
+  setDisplay(dropDownListIngredientsUl, 'none');
+  searchBar.value = ''
+
+  addSelectedIngredient(dropSerchElementLi);
 };
 
 
