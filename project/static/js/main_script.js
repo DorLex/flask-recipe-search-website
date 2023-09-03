@@ -1,4 +1,11 @@
-import { searchBar, dropDownListIngredientsUl, liveSearchIngredients, } from './live_search.js';
+import {
+  searchBar,
+  dropDownListIngredientsUl,
+  liveSearchIngredients,
+  clearElement,
+  setDisplay,
+}
+  from './live_search.js';
 
 
 
@@ -15,8 +22,8 @@ function searchBarHandler() {
     liveSearchIngredients(inputText)
 
   } else {
-    dropDownListIngredientsUl.style.display = 'none';
-    dropDownListIngredientsUl.innerHTML = ''
+    setDisplay(dropDownListIngredientsUl, 'none');
+    clearElement(dropDownListIngredientsUl)
   };
 };
 
