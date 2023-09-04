@@ -10,7 +10,7 @@
   <h3><a href="{{ url_for('recipe_details', recipe_id=recipe.id) }}">{{ recipe.title }}</a></h3>
 
   <ul>
-    {% for full_recipe in recipe.book %}
+    {% for full_recipe in recipe.relationship %}
     <li>{{ full_recipe.ingredient.ingredient }} — {{ full_recipe.quantity.quantity }}</li>
     {% endfor %}
   </ul>

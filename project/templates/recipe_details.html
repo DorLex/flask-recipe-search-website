@@ -5,7 +5,7 @@
 <div class="recipe">
   <h3>{{ recipe.title }}</h3>
   <ul>
-    {% for full_recipe in recipe.book %}
+    {% for full_recipe in recipe.relationship %}
     <li>{{ full_recipe.ingredient.ingredient }} – {{ full_recipe.quantity.quantity }}</li>
     {% endfor %}
   </ul>

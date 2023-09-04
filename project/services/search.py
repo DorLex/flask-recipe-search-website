@@ -1,4 +1,4 @@
-from project.db_models import db, Recipes, Ingredients, Book
+from project.db_models import db, Recipes, Ingredients, RelationshipTable
 
 
 def _parse_search_elements(ingredients_str):
@@ -8,8 +8,8 @@ def _parse_search_elements(ingredients_str):
 
 def _get_recipes_id_by_ingredient(ingredient):
     recipes_id_select_obj = db.select(Recipes.id) \
-        .join(Book, Book.recipe_id == Recipes.id) \
-        .join(Ingredients, Book.ingredient_id == Ingredients.id) \
+        .join(RelationshipTable, RelationshipTable.recipe_id == Recipes.id) \
+        .join(Ingredients, RelationshipTable.ingredient_id == Ingredients.id) \
         .filter(Ingredients.ingredient.ilike(f'%{ingredient}%'))
 
     return recipes_id_select_obj

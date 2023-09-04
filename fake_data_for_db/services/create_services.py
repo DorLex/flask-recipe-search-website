@@ -1,4 +1,4 @@
-from project.db_models import Recipes, Ingredients, Quantity, Book
+from project.db_models import Recipes, Ingredients, Quantity, RelationshipTable
 
 
 def create_recipe(recipes_num):
@@ -16,6 +16,6 @@ def create_quantity(quantity_num):
     return quantity
 
 
-def create_book(recipe, ingredient, quantity):
-    book = Book(recipe=recipe, ingredient=ingredient, quantity=quantity)
-    return book
+def create_relationship(recipe, ingredient, quantity):
+    relationship = RelationshipTable(recipe=recipe, ingredient=ingredient, quantity=quantity)
+    return relationship

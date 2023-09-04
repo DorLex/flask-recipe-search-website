@@ -5,19 +5,15 @@ from project.app import app
 db = SQLAlchemy(app)
 
 
-class Book(db.Model):
+class RelationshipTable(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
     ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredients.id'))
     quantity_id = db.Column(db.Integer, db.ForeignKey('quantity.id'))
 
-    # recipe = db.relationship('Recipes', back_populates='book')
-    # ingredient = db.relationship('Ingredients', back_populates='book')
-    # quantity = db.relationship('Quantity', back_populates='book')
-
     def __repr__(self):
-        return f'<Объект ассоц>'
+        return f'<Таблица связей>'
 
 
 class Recipes(db.Model):
@@ -25,8 +21,7 @@ class Recipes(db.Model):
     title = db.Column(db.String(120), nullable=False)
     description = db.Column(db.Text, nullable=False)
 
-    # book = db.relationship('Book', back_populates='recipe')
-    book = db.relationship('Book', backref='recipe')
+    relationship = db.relationship('RelationshipTable', backref='recipe')
 
     def __repr__(self):
         return f'<{self.title}>'
@@ -36,8 +31,7 @@ class Ingredients(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ingredient = db.Column(db.Text, nullable=False)
 
-    # book = db.relationship('Book', back_populates='ingredient')
-    book = db.relationship('Book', backref='ingredient')
+    relationship = db.relationship('RelationshipTable', backref='ingredient')
 
     def __repr__(self):
         return f'<{self.ingredient}>'
@@ -47,8 +41,7 @@ class Quantity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     quantity = db.Column(db.Text, nullable=False)
 
-    # book = db.relationship('Book', back_populates='quantity')
-    book = db.relationship('Book', backref='quantity')
+    relationship = db.relationship('RelationshipTable', backref='quantity')
 
     def __repr__(self):
         return f'<{self.quantity}>'

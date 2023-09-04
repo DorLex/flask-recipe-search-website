@@ -1,4 +1,4 @@
-from fake_data_for_db.services.create_services import create_recipe, create_book
+from fake_data_for_db.services.create_services import create_recipe, create_relationship
 from fake_data_for_db.services.service import get_or_create_ingredient, get_or_create_quantity
 from project.db_models import db
 
@@ -20,7 +20,7 @@ def save_data_to_db():
             quantity = get_or_create_quantity()
             save(quantity)
 
-            book = create_book(recipe, ingredient, quantity)
-            save(book)
+            relationship = create_relationship(recipe, ingredient, quantity)
+            save(relationship)
 
         db.session.commit()
