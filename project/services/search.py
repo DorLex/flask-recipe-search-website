@@ -1,4 +1,4 @@
-from project.db_models import db, Recipes, Ingredients, RelationshipTable
+from project.db_models import db, Recipes, Ingredients
 
 
 def _parse_search_elements(ingredients_str):
@@ -7,10 +7,11 @@ def _parse_search_elements(ingredients_str):
 
 
 def _get_recipes_id_by_ingredient(ingredient):
-    recipes_id_select_obj = db.select(Recipes.id) \
-        .join(RelationshipTable, RelationshipTable.recipe_id == Recipes.id) \
-        .join(Ingredients, RelationshipTable.ingredient_id == Ingredients.id) \
-        .filter(Ingredients.ingredient.ilike(f'%{ingredient}%'))
+    recipes_id_select_obj = (
+        db.select(Recipes.recipe_id)
+        .join(Recipes.ingredients)
+        .filter(Ingredients.title == ingredient)
+    )
 
     return recipes_id_select_obj
 
@@ -30,8 +31,8 @@ def _intersect_queries(query_objs):
 
 def _get_intersect_recipes_list(intersect_recipes_id_query):
     recipes_list = db.session.execute(
-        db.select(Recipes).filter(Recipes.id.in_(intersect_recipes_id_query))
-    ).scalars().all()
+        db.select(Recipes).filter(Recipes.recipe_id.in_(intersect_recipes_id_query))
+    ).scalars().unique().all()
 
     return recipes_list
 

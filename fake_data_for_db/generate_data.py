@@ -1,6 +1,26 @@
-from fake_data_for_db.services.create_services import create_recipe, create_relationship
-from fake_data_for_db.services.service import get_or_create_ingredient, get_or_create_quantity
+from random import randint
+
+from fake_data_for_db.services.create_services import create_recipe
+from fake_data_for_db.services.get_services import get_or_create_ingredient
 from project.db_models import db
+
+
+def _get_random_num():
+    random_num = randint(1, 10)
+    return random_num
+
+
+def _get_ingredient_num(ingredients_map):
+    while True:
+        random_num = _get_random_num()
+        if random_num not in ingredients_map:
+            ingredient_num = random_num
+            ingredients_map.append(random_num)
+
+            return ingredient_num
+
+        else:
+            continue
 
 
 def save(obj):
@@ -13,14 +33,13 @@ def save_data_to_db():
         recipe = create_recipe(recipes_num)
         save(recipe)
 
-        for _ in range(5):
-            ingredient = get_or_create_ingredient()
+        ingredients_map = []
+        for _ in range(1, 6):
+            ingredient_num = _get_ingredient_num(ingredients_map)
+
+            ingredient = get_or_create_ingredient(ingredient_num)
             save(ingredient)
 
-            quantity = get_or_create_quantity()
-            save(quantity)
-
-            relationship = create_relationship(recipe, ingredient, quantity)
-            save(relationship)
+            recipe.ingredients.append(ingredient)
 
         db.session.commit()
