@@ -1,3 +1,3 @@
-from .create_app import app
-from . import urls
-from . import controllers
+from project import configs
+
+from project import urls

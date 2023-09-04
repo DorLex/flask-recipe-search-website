@@ -1,8 +1,6 @@
-from flask import Flask
-
 from decouple import config
 
-app = Flask(__name__)
+from project.app import app
 
 DATABASE_USER = config('DATABASE_USER')
 DATABASE_PASSWORD = config('DATABASE_PASSWORD')

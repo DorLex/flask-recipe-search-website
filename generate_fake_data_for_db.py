@@ -1,4 +1,4 @@
-from project.create_app import app
+from project.app import app
 from fake_data_for_db.generate_data import save_data_to_db
 
 if __name__ == '__main__':

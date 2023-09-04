@@ -1,4 +1,4 @@
-from project import app
+from project.app import app
 from project import controllers
 
 urls = [
