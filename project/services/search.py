@@ -39,8 +39,8 @@ def _get_intersect_recipes_list(intersect_recipes_id_query):
 
 def get_recipes_by_ingredients(ingredients_str):
     search_ingredients_list = _parse_search_elements(ingredients_str)
-    recipes_id_query_objs = _search_recipes_id_by_ingredients(search_ingredients_list)
-    intersect_recipes_id_query = _intersect_queries(recipes_id_query_objs)
+    recipes_id_select_objs = _search_recipes_id_by_ingredients(search_ingredients_list)
+    intersect_recipes_id_query = _intersect_queries(recipes_id_select_objs)
     recipes_list = _get_intersect_recipes_list(intersect_recipes_id_query)
 
     return recipes_list
