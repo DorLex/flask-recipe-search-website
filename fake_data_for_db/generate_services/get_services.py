@@ -1,4 +1,4 @@
-from fake_data_for_db.services.create_services import create_ingredient
+from fake_data_for_db.generate_services.create_services import create_ingredient
 from project.db_models import Ingredients, db
 
 
