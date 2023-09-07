@@ -9,21 +9,21 @@ import {
 
 
 
-const searchButton = document.querySelector('.search-button')
-const selectedIngredientsSnans = document.getElementsByClassName('selected-ingredient-span')
+const searchButton = document.querySelector('.search-button');
+const selectedIngredientsSnans = document.getElementsByClassName('selected-ingredient-span');
 
 
 
 function searchBarHandler() {
 
-  let inputText = this.value
+  let inputText = this.value;
 
   if (inputText) {
-    liveSearchIngredients(inputText)
+    liveSearchIngredients(inputText);
 
   } else {
     setDisplay(dropDownListIngredientsUl, 'none');
-    clearElement(dropDownListIngredientsUl)
+    clearElement(dropDownListIngredientsUl);
   };
 };
 

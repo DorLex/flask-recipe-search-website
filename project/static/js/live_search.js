@@ -55,7 +55,7 @@ function addSelectedIngredient(dropSerchElementLi) {
 function dropSerchElementHandler(dropSerchElementLi) {
   clearElement(dropDownListIngredientsUl);
   setDisplay(dropDownListIngredientsUl, 'none');
-  searchBar.value = ''
+  searchBar.value = '';
 
   addSelectedIngredient(dropSerchElementLi);
 };
@@ -69,7 +69,7 @@ function createContentForDropDownList(foundIngredientsList) {
   if (foundIngredientsList.length > 0) {
     foundIngredientsList.forEach(foundIngredient => {
 
-      let dropSerchElementLi = createElement('li', 'search-element', { content: foundIngredient })
+      let dropSerchElementLi = createElement('li', 'search-element', { content: foundIngredient });
       dropSerchElementLi.addEventListener('click', () => dropSerchElementHandler(dropSerchElementLi));
       dropDownListIngredientsUl.appendChild(dropSerchElementLi);
 
