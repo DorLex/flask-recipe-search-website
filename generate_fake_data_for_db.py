@@ -5,4 +5,4 @@ if __name__ == '__main__':
     with app.app_context():
         save_fake_data_to_db()
 
-    print('---OK---')
+    print('---generate data successfully---')
