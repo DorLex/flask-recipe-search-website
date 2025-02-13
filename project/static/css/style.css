@@ -42,7 +42,7 @@ body {
   margin-left: 2%;
 }
 
-.mainmenu {
+.main-menu {
   list-style: none;
   display: flex;
   justify-content: center;
@@ -50,7 +50,7 @@ body {
   height: 100%;
 }
 
-.mainmenu li {
+.main-menu li {
   background-color: rgb(249, 198, 102);
   display: flex;
   margin-left: 4px;
@@ -59,20 +59,20 @@ body {
   height: 100%;
 }
 
-.mainmenu li:hover {
+.main-menu li:hover {
   background-color: rgb(255, 166, 0);
   box-shadow: 1px 7px 30px -5px black;
   transform: rotate(2deg) scale(1.1);
 }
 
-.mainmenu a {
+.main-menu a {
   text-decoration: none;
   color: rgb(44, 48, 165);
   font-size: 30px;
   margin: auto;
 }
 
-.mainmenu a:hover {
+.main-menu a:hover {
   color: rgb(182, 24, 24);
 }
 
@@ -230,7 +230,7 @@ body {
 }
 
 @media (max-width: 1000px) {
-  .mainmenu {
+  .main-menu {
     display: none;
   }
 }

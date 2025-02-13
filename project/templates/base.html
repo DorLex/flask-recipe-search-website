@@ -18,7 +18,7 @@
   <header class="header">
     <h1 id="website-name" class="website-name">Рецепты</h1>
 
-    <menu class="mainmenu">
+    <menu class="main-menu">
       <li><a href="{{ url_for('home') }}">Главная</a></li>
       <li><a href='/registration'>Регистрация</a></li>
       <li><a href="{{ url_for('about') }}">О сайте</a></li>
@@ -44,13 +44,10 @@
 
   <input type="button" class="search-button" value="Найти рецепты">
 
-
-
   {% block content %}
   {% endblock %}
 
   <script type="module" src="{{ url_for('static', filename='js/main_script.js') }}"></script>
-
 </body>
 
 </html>
