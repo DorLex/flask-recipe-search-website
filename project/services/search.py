@@ -1,46 +1,41 @@
+from sqlalchemy import Select, CompoundSelect
+
 from project.db_models import db, Recipes, Ingredients
 
 
-def _parse_search_elements(ingredients_str):
-    search_elements_list = ingredients_str.split(',')
-    return search_elements_list
+def _parse_search_elements(ingredients: str) -> list[str]:
+    return ingredients.split(',')
 
 
-def _get_recipes_id_by_ingredient(ingredient):
-    recipes_id_select_obj = (
+def _generate_recipe_stmt_by_ingredient(ingredient: str) -> Select:
+    recipes_id_stmt: Select = (
         db.select(Recipes.recipe_id)
         .join(Recipes.ingredients)
         .filter(Ingredients.title == ingredient)
     )
 
-    return recipes_id_select_obj
+    return recipes_id_stmt
 
 
-def _search_recipes_id_by_ingredients(search_elements):
-    recipes_id_select_objs = []
-    for ingredient in search_elements:
-        recipes_id_select_objs.append(_get_recipes_id_by_ingredient(ingredient))
-
-    return recipes_id_select_objs
+def _collect_recipe_stmts(search_elements: list[str]) -> list[Select]:
+    return [_generate_recipe_stmt_by_ingredient(ingredient) for ingredient in search_elements]
 
 
-def _intersect_queries(query_objs):
-    intersect_query = db.intersect(*query_objs)
-    return intersect_query
+def _get_intersect_recipes(intersect_recipes_id_query: CompoundSelect) -> list[Recipes]:
+    query: Select = (
+        db.select(Recipes)
+        .filter(
+            Recipes.recipe_id.in_(intersect_recipes_id_query)
+        )
+    )
+    recipes: list[Recipes] = db.session.execute(query).scalars().unique().all()
+
+    return recipes
 
 
-def _get_intersect_recipes_list(intersect_recipes_id_query):
-    recipes_list = db.session.execute(
-        db.select(Recipes).filter(Recipes.recipe_id.in_(intersect_recipes_id_query))
-    ).scalars().unique().all()
+def get_recipes_by_ingredients(ingredients: str) -> list[Recipes]:
+    search_ingredients: list[str] = _parse_search_elements(ingredients)
+    recipes_stmts: list[Select] = _collect_recipe_stmts(search_ingredients)
+    intersect_recipes_id_query: CompoundSelect = db.intersect(*recipes_stmts)
 
-    return recipes_list
-
-
-def get_recipes_by_ingredients(ingredients_str):
-    search_ingredients_list = _parse_search_elements(ingredients_str)
-    recipes_id_select_objs = _search_recipes_id_by_ingredients(search_ingredients_list)
-    intersect_recipes_id_query = _intersect_queries(recipes_id_select_objs)
-    recipes_list = _get_intersect_recipes_list(intersect_recipes_id_query)
-
-    return recipes_list
+    return _get_intersect_recipes(intersect_recipes_id_query)
