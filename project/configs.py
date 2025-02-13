@@ -14,8 +14,8 @@ app.debug = config('DEBUG', cast=bool)
 
 app.config['SECRET_KEY'] = config('SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = config('SQLALCHEMY_TRACK_MODIFICATIONS', cast=bool)
 
+# для отображения sql запросов в flask debug toolbar
 app.config['SQLALCHEMY_RECORD_QUERIES'] = config('SQLALCHEMY_RECORD_QUERIES', cast=bool)
 
 toolbar = DebugToolbarExtension(app)
