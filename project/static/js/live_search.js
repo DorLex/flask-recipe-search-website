@@ -23,7 +23,6 @@ function switchDisplayElementIfContent(element, foundIngredientsList) {
 };
 
 
-
 function createElement(tagName, className, { content = null, type = null }) {
   let element = document.createElement(tagName);
   element.className = className;
@@ -39,8 +38,8 @@ function createElement(tagName, className, { content = null, type = null }) {
 };
 
 
-function addSelectedIngredient(dropSerchElementLi) {
-  let selectIngredientSpan = createElement('span', 'selected-ingredient-span', { content: dropSerchElementLi.innerHTML });
+function addSelectedIngredient(dropSearchElementLi) {
+  let selectIngredientSpan = createElement('span', 'selected-ingredient-span', { content: dropSearchElementLi.innerHTML });
   let closeButtonSelectIngredient = createElement('button', 'search-element-btn', { type: 'button' });
 
   closeButtonSelectIngredient.addEventListener('click', () => selectIngredientSpan.remove());
@@ -51,15 +50,13 @@ function addSelectedIngredient(dropSerchElementLi) {
 };
 
 
-
-function dropSerchElementHandler(dropSerchElementLi) {
+function dropSearchElementHandler(dropSearchElementLi) {
   clearElement(dropDownListIngredientsUl);
   setDisplay(dropDownListIngredientsUl, 'none');
   searchBar.value = '';
 
-  addSelectedIngredient(dropSerchElementLi);
+  addSelectedIngredient(dropSearchElementLi);
 };
-
 
 
 function createContentForDropDownList(foundIngredientsList) {
@@ -67,23 +64,20 @@ function createContentForDropDownList(foundIngredientsList) {
   switchDisplayElementIfContent(dropDownListIngredientsUl, foundIngredientsList);
 
   if (foundIngredientsList.length > 0) {
-    foundIngredientsList.forEach(foundIngredient => {
-
-      let dropSerchElementLi = createElement('li', 'search-element', { content: foundIngredient });
-      dropSerchElementLi.addEventListener('click', () => dropSerchElementHandler(dropSerchElementLi));
-      dropDownListIngredientsUl.appendChild(dropSerchElementLi);
-
-    });
+    foundIngredientsList.forEach(
+      foundIngredient => {
+        let dropSearchElementLi = createElement('li', 'search-element', { content: foundIngredient });
+        dropSearchElementLi.addEventListener('click', () => dropSearchElementHandler(dropSearchElementLi));
+        dropDownListIngredientsUl.appendChild(dropSearchElementLi);
+      }
+    );
   };
 };
 
 
-
-
-
-
 export function liveSearchIngredients(inputText) {
   let url = 'http://127.0.0.1:5000/live-search' + `?ingredient=${inputText}`;
+
   fetch(url)
     .then(responseObj => {
       return responseObj.json();
