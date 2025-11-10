@@ -1,0 +1,16 @@
+name: "recipe-search"
+
+services:
+  postgres:
+    image: postgres:17.6-alpine3.22
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
