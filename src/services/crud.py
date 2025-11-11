@@ -18,10 +18,7 @@ def get_recipes() -> list[Recipe]:
 
 
 def get_ingredients_ilike(ingredient: str) -> list[str]:
-    query: Select = db.select(Ingredient.title).filter(
-        Ingredient.title.ilike(f'%{ingredient}%'),
-    )
-
+    query: Select = db.select(Ingredient.title).where(Ingredient.title.ilike(f'%{ingredient}%'))
     ingredient_titles: list[str] = db.session.execute(query).scalars().all()
 
     return ingredient_titles
