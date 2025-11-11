@@ -1,5 +1,5 @@
-from fake_data_for_db.services.crud import create_recipe, get_or_create_ingredient
-from fake_data_for_db.services.randomizer import get_ingredient_num
+from _fake_data_for_db.services.crud import create_recipe, get_or_create_ingredient
+from _fake_data_for_db.services.randomizer import get_ingredient_num
 from src.db_models import Ingredients, Recipes, db
 
 
