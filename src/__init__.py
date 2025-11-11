@@ -1,3 +1,6 @@
-from src import configs
+from src import configs, urls
 
-from src import urls
+__all__: list[str] = [
+    'configs',
+    'urls',
+]

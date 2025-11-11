@@ -6,6 +6,6 @@ from src.services import crud
 
 
 class HomeView(MethodView):
-    def get(self):
+    def get(self) -> str:
         recipes: list[Recipes] = crud.get_recipes()
         return render_template('index.html', recipes=recipes)

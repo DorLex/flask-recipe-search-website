@@ -1,10 +1,11 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Table
 
 from src.app import app
 
-db = SQLAlchemy(app)
+db: SQLAlchemy = SQLAlchemy(app)
 
-recipes_ingredients = db.Table(
+recipes_ingredients: Table = db.Table(
     'recipes_ingredients',
     db.Column('recipe_id', db.Integer, db.ForeignKey('recipes.recipe_id'), primary_key=True),
     db.Column('ingredient_id', db.Integer, db.ForeignKey('ingredients.ingredient_id'), primary_key=True),
@@ -23,7 +24,7 @@ class Recipes(db.Model):
         lazy='joined',
     )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'<{self.title}>'
 
 
@@ -39,5 +40,5 @@ class Ingredients(db.Model):
         lazy='joined',
     )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'<{self.ingredient}>'

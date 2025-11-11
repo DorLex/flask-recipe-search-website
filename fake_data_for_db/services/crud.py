@@ -1,6 +1,6 @@
 from sqlalchemy import Select
 
-from src.db_models import Recipes, Ingredients, db
+from src.db_models import Ingredients, Recipes, db
 
 
 def create_recipe(recipes_num: int) -> Recipes:
@@ -11,10 +11,7 @@ def create_recipe(recipes_num: int) -> Recipes:
 
 
 def _get_ingredient(ingredient_num: int) -> Ingredients | None:
-    query: Select = (
-        db.select(Ingredients)
-        .filter_by(title=f'ингредиент {ingredient_num}')
-    )
+    query: Select = db.select(Ingredients).filter_by(title=f'ингредиент {ingredient_num}')
     ingredient: Ingredients | None = db.session.execute(query).scalar()
 
     return ingredient
