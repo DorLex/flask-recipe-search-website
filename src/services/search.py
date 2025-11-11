@@ -1,6 +1,6 @@
 from sqlalchemy import Select, CompoundSelect
 
-from project.db_models import db, Recipes, Ingredients
+from src.db_models import db, Recipes, Ingredients
 
 
 def _parse_search_elements(ingredients: str) -> list[str]:
@@ -25,7 +25,7 @@ def _get_intersect_recipes(intersect_recipes_id_query: CompoundSelect) -> list[R
     query: Select = (
         db.select(Recipes)
         .filter(
-            Recipes.recipe_id.in_(intersect_recipes_id_query)
+            Recipes.recipe_id.in_(intersect_recipes_id_query),
         )
     )
     recipes: list[Recipes] = db.session.execute(query).scalars().unique().all()

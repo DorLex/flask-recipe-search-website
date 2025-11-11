@@ -1,7 +1,7 @@
 from flask import request, jsonify
 from flask.views import MethodView
 
-from project.services import crud
+from src.services import crud
 
 
 class LiveSearchIngredients(MethodView):

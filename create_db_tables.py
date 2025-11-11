@@ -1,5 +1,5 @@
-from project.db_models import db
-from project.app import app
+from src.db_models import db
+from src.app import app
 
 if __name__ == '__main__':
     with app.app_context():

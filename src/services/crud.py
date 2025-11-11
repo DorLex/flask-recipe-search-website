@@ -1,6 +1,6 @@
 from sqlalchemy import Select
 
-from project.db_models import db, Recipes, Ingredients
+from src.db_models import db, Recipes, Ingredients
 
 
 def get_recipe_by_id(recipe_id: int) -> Recipes:
@@ -28,7 +28,7 @@ def get_ingredients_ilike(ingredient: str) -> list[str]:
     query: Select = (
         db.select(Ingredients.title)
         .filter(
-            Ingredients.title.ilike(f'%{ingredient}%')
+            Ingredients.title.ilike(f'%{ingredient}%'),
         )
     )
 

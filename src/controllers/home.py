@@ -1,8 +1,8 @@
 from flask import render_template
 from flask.views import MethodView
 
-from project.db_models import Recipes
-from project.services import crud
+from src.db_models import Recipes
+from src.services import crud
 
 
 class HomeView(MethodView):

@@ -1,13 +1,13 @@
 from flask_sqlalchemy import SQLAlchemy
 
-from project.app import app
+from src.app import app
 
 db = SQLAlchemy(app)
 
 recipes_ingredients = db.Table(
     'recipes_ingredients',
     db.Column('recipe_id', db.Integer, db.ForeignKey('recipes.recipe_id'), primary_key=True),
-    db.Column('ingredient_id', db.Integer, db.ForeignKey('ingredients.ingredient_id'), primary_key=True)
+    db.Column('ingredient_id', db.Integer, db.ForeignKey('ingredients.ingredient_id'), primary_key=True),
 )
 
 

@@ -1,12 +1,12 @@
 from sqlalchemy import Select
 
-from project.db_models import Recipes, Ingredients, db
+from src.db_models import Recipes, Ingredients, db
 
 
 def create_recipe(recipes_num: int) -> Recipes:
     return Recipes(
         title=f'Рецепт {recipes_num}',
-        description=f'описание рецепта {recipes_num} ' * 50
+        description=f'описание рецепта {recipes_num} ' * 50,
     )
 
 
@@ -23,7 +23,7 @@ def _get_ingredient(ingredient_num: int) -> Ingredients | None:
 def _create_ingredient(ingredient_num: int) -> Ingredients:
     return Ingredients(
         title=f'ингредиент {ingredient_num}',
-        weight=f'{ingredient_num}0 гр'
+        weight=f'{ingredient_num}0 гр',
     )
 
 

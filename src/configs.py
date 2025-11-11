@@ -1,7 +1,7 @@
 from flask_debugtoolbar import DebugToolbarExtension
 
-from project.app import app
-from project.core.settings import config
+from src.app import app
+from src.core.settings import config
 
 app.debug = config.debug
 app.config['SECRET_KEY'] = config.secret_key
