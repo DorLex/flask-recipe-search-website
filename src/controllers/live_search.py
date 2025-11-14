@@ -7,7 +7,7 @@ from src.services.recipe import RecipeService
 
 class IngredientLiveSearchView(MethodView):
     def get(self) -> tuple[Response, int]:
-        title_fragment: str | None = request.args.get('title_fragment1')
+        title_fragment: str | None = request.args.get('title_fragment')
         if not title_fragment:
             return jsonify({'error': 'title_fragment parameter is required'}), 422
 
