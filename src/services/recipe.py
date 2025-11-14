@@ -1,9 +1,5 @@
-from sqlalchemy import CompoundSelect, Select
-
-from src.core.database import db
 from src.models import Recipe
 from src.repositories.recipe import RecipeRepository
-from src.services.search import _collect_recipe_stmts, _get_intersect_recipes, _parse_search_elements
 
 
 class RecipeService:
@@ -19,9 +15,9 @@ class RecipeService:
     def get_ingredient_titles_ilike(self, title_fragment: str) -> list[str]:
         return self.repository.get_ingredient_titles_ilike(title_fragment)
 
-    def get_recipes_by_ingredients(self, ingredients: str) -> list[Recipe]:
-        search_ingredients: list[str] = _parse_search_elements(ingredients)
-        recipes_stmts: list[Select] = _collect_recipe_stmts(search_ingredients)
-        intersect_recipes_id_query: CompoundSelect = db.intersect(*recipes_stmts)
+    def get_recipes_by_ingredients(self, raw_ingredient_titles: str) -> list[Recipe]:
+        ingredient_titles: list[str] = self._parse_ingredient_titles(raw_ingredient_titles)
+        return self.repository.get_intersect_recipes(ingredient_titles)
 
-        return _get_intersect_recipes(intersect_recipes_id_query)
+    def _parse_ingredient_titles(self, raw_ingredient_titles: str) -> list[str]:
+        return raw_ingredient_titles.split(',')
