@@ -6,9 +6,8 @@ from src.repositories.recipe import RecipeRepository
 from src.services.recipe import RecipeService
 
 
-class HomeView(MethodView):
-    def get(self) -> str:
+class RecipeView(MethodView):
+    def get(self, recipe_id: int) -> str:
         recipe_service: RecipeService = RecipeService(RecipeRepository())
-        recipes: list[Recipe] = recipe_service.get_recipes()
-
-        return render_template('index.html', recipes=recipes)
+        recipe: Recipe = recipe_service.get_recipe_by_id(recipe_id)
+        return render_template('recipe_details.html', recipe=recipe, title=f'Рецепт №{recipe_id}')

@@ -1,9 +1,6 @@
-from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Table
 
-from src.app import app
-
-db: SQLAlchemy = SQLAlchemy(app)
+from src.core.database import db
 
 recipes_ingredients: Table = db.Table(
     'recipes_ingredients',

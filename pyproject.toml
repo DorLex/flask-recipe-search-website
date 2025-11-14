@@ -55,4 +55,3 @@ ignore = [
 
 [tool.ruff.format]
 quote-style = "single" # какие ковычки будет устанавливать форматтер, если может
-

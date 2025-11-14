@@ -76,7 +76,7 @@ function createContentForDropDownList(foundIngredientsList) {
 
 
 export function liveSearchIngredients(inputText) {
-  let url = 'http://127.0.0.1:5000/live-search' + `?ingredient=${inputText}`;
+  let url = 'http://127.0.0.1:5000/ingredient-live-search' + `?title_fragment=${inputText}`;
 
   fetch(url)
     .then(responseObj => {

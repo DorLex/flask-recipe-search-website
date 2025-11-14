@@ -1,12 +1,15 @@
 from flask import Response, jsonify, request
 from flask.views import MethodView
 
-from src.services import crud
+from src.repositories.recipe import RecipeRepository
+from src.services.recipe import RecipeService
 
 
-class LiveSearchIngredients(MethodView):
+class IngredientLiveSearchView(MethodView):
     def get(self) -> Response:
-        input_ingredient: str = request.args.get('ingredient')
-        ingredients: list[str] = crud.get_ingredients_ilike(input_ingredient)
+        title_fragment: str = request.args.get('title_fragment')
 
-        return jsonify(ingredients)
+        recipe_service: RecipeService = RecipeService(RecipeRepository())
+        ingredient_titles: list[str] = recipe_service.get_ingredient_titles_ilike(title_fragment)
+
+        return jsonify(ingredient_titles)

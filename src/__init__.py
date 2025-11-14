@@ -1,6 +1,7 @@
-from src import configs, urls
+from src import urls
+from src.core import debug
 
 __all__: list[str] = [
-    'configs',
     'urls',
+    'debug',
 ]

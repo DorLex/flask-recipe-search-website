@@ -5,7 +5,7 @@ from random import randint
 from sqlalchemy import Select
 
 from src.app import app
-from src.db_models import Ingredient, Recipe, db
+from src.models import Ingredient, Recipe, db
 
 logging.basicConfig(level=INFO)
 logger: Logger = getLogger(__name__)

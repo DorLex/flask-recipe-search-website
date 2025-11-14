@@ -36,7 +36,7 @@ function recipeSearch() {
       ingredientsList.push(spanElement.innerText);
     }
 
-    let url = 'http://127.0.0.1:5000/search-recipes-by-ingredients' + `?ingredients=${ingredientsList}`;
+    let url = 'http://127.0.0.1:5000/recipe-search/by-ingredients' + `?ingredients=${ingredientsList}`;
 
     window.location.href = url;
   };
