@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if recipes %}
+{% for recipe in recipes %}
+<div class="recipe">
+  <h3><a href="{{ url_for('recipe_details', recipe_id=recipe.id) }}">{{ recipe.title }}</a></h3>
+
+  <ul>
+    {% for ingredient in recipe.ingredients %}
+    <li>{{ ingredient.title }} – {{ ingredient.weight }}</li>
+    {% endfor %}
+  </ul>
+
+  <p class="limit-description">{{ recipe.description }}</p>
+</div>
+{% endfor %}
+
+{% elif not recipes %}
+{% for message in get_flashed_messages() %}
+<h3 class="red flashed-messages">{{ message }}</h3>
+{% endfor %}
+
+<h3 class="green flashed-messages">Введите ингредиенты в поиск</h3>
+
+{% endif %}
+
+{% endblock %}
