@@ -6,10 +6,12 @@ from src.services.recipe import RecipeService
 
 
 class IngredientLiveSearchView(MethodView):
-    def get(self) -> Response:
-        title_fragment: str = request.args.get('title_fragment')
+    def get(self) -> tuple[Response, int]:
+        title_fragment: str | None = request.args.get('title_fragment1')
+        if not title_fragment:
+            return jsonify({'error': 'title_fragment parameter is required'}), 422
 
         recipe_service: RecipeService = RecipeService(RecipeRepository())
         ingredient_titles: list[str] = recipe_service.get_ingredient_titles_ilike(title_fragment)
 
-        return jsonify(ingredient_titles)
+        return jsonify(ingredient_titles), 200
