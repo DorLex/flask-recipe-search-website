@@ -22,7 +22,7 @@ class Recipe(db.Model):
     )
 
     def __repr__(self) -> str:
-        return f'<{self.id} {self.title}>'
+        return f'<Recipe:[{self.id}] "{self.title}">'
 
 
 class Ingredient(db.Model):
@@ -38,4 +38,4 @@ class Ingredient(db.Model):
     )
 
     def __repr__(self) -> str:
-        return f'<{self.id} {self.title}>'
+        return f'<Ingredient:[{self.id}] "{self.title}">'
